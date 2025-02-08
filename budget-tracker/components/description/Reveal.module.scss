@@ -1,0 +1,41 @@
+$highlight-color:rgb(69, 172, 97); // Blue color for highlighting
+
+.container {
+  position: relative;
+  overflow: hidden;
+}
+
+.textContent {
+  opacity: 0;
+  transform: translateY(75px);
+  transition: opacity 0.5s ease-in, transform 0.5s ease-in;
+
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.highlightSlide {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 0;
+  right: 0;
+  background-color: $highlight-color;
+  z-index: 20;
+  animation: slide-out 0.5s ease-in;
+
+  &.visible {
+    animation: slide-out 0.5s ease-in forwards;
+  }
+}
+
+@keyframes slide-out {
+  from {
+    left: 0;
+  }
+  to {
+    left: 100%;
+  }
+}
