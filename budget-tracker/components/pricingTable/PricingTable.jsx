@@ -34,9 +34,6 @@ const styles = {
     justifyContent: "center",
     flexWrap: "wrap",
   },
-  hiddenInput: {
-    display: "none",
-  },
   pricing: {
     display: "flex",
     alignItems: "flex-start",
@@ -92,15 +89,13 @@ const styles = {
   feature: {
     fontSize: "13px",
     marginBottom: "5px",
-    marginLeft: "3px", // Add space to the left to accommodate the icon
-    position: "relative",
     display: "flex",
     alignItems: "center",
   },
   featureIcon: {
     fontSize: "16px",
-    marginRight: "10px", // Add margin to the right to space out the icon and text
-    color: "rgb(69, 172, 97)", // Green color for the check icon
+    marginRight: "10px",
+    color: "rgb(69, 172, 97)",
   },
   btns: {
     width: "100%",
@@ -118,6 +113,7 @@ const styles = {
     outline: "0.5mm solid rgb(40, 40, 40)",
     cursor: "pointer",
     transition: "background-color 0.25s ease, color 0.25s ease",
+    textDecoration: "none",
   },
   buttonHover: {
     background: "black",
@@ -128,93 +124,74 @@ const styles = {
     textDecoration: "underline",
     fontSize: "12px",
   },
-  selected: {
-    background: "rgb(40, 40, 40)",
-    color: "white",
-    transform: "scale(1.1)",
-    position: "relative",
-  },
 };
 
 function PricingPlans() {
-  const handleMouseEnter = (e) => {
-    e.currentTarget.style.boxShadow = styles.pricingHover.boxShadow;
-  };
-
-  const handleMouseLeave = (e) => {
-    e.currentTarget.style.boxShadow = "none";
-  };
-
-  const handleButtonHover = (e) => {
-    e.currentTarget.style.background = styles.buttonHover.background;
-    e.currentTarget.style.color = styles.buttonHover.color;
-  };
-
-  const handleButtonLeave = (e) => {
-    e.currentTarget.style.background = styles.button.background;
-    e.currentTarget.style.color = styles.button.color;
-  };
-
   return (
     <div style={styles.center}>
       <div style={styles.title}>
         Choose the plan that <span style={styles.spanHighlight}>works for you</span>
       </div>
       <div style={styles.pricings}>
-        {[{
-          id: "p1",
-          name: "Starter",
-          price: "$11.99",
-          Icon: Leaderboard,
-          features: [
-            "Analysing income & expenses.",
-            "  Categorize spending.",
-            " Basic financial summaries.",
-            "  Basic customer support.",
-          ],
-        },
-        {
-          id: "p2",
-          name: "Basic",
-          price: "$49.99",
-          Icon: AccountTree,
-          features: [
-            "Smart insights on spending habits.",
-            "Set & monitor savings goals.",
-            "Cloud Storage – Up to 1GB for receipts & invoices",
-            "Access from web & mobile",
-            "Priority Email & Chat Support",
-          
-          ],
-        },
-        {
-          id: "p3",
-          name: "Premium",
-          price: "$225.99",
-          Icon: Schema,
-          features: [
-            "AI-Powered Smart Suggestions – Personalized financial advice",
-            "AI-Powered Budget Forecasting",
-            "Up to 10GB for receipts & invoices.",
-            "Predict future finances",
-           
-            "Generate tax summaries.",
-            "$5 for extra 50GB.",
-          ],
-        },
+        {[  
+          {
+            id: "p1",
+            name: "Starter",
+            price: "$2.99",
+            Icon: Leaderboard,
+            features: [
+              "Analysing income & expenses.",
+              "Categorize spending.",
+              "Basic financial summaries.",
+              "Basic customer support.",
+            ],
+          },
+          {
+            id: "p2",
+            name: "Basic",
+            price: "$5.99",
+            Icon: AccountTree,
+            features: [
+              "Smart insights on spending habits.",
+              "Set & monitor savings goals.",
+              "Cloud Storage – Up to 1GB for receipts & invoices",
+              "Access from web & mobile",
+              "Priority Email & Chat Support",
+            ],
+          },
+          {
+            id: "p3",
+            name: "Premium",
+            price: "$25.99", // Regular price
+            Icon: Schema,
+            link: "http://localhost:3001/",
+            features: [
+              "AI-Powered Smart Suggestions – Personalized financial advice",
+              "AI-Powered Budget Forecasting",
+              "Up to 10GB for receipts & invoices.",
+              "Predict future finances",
+              "Generate tax summaries.",
+              "$5 for extra 50GB.",
+            ],
+            strikethrough: true, // Only for Premium plan
+          },
         ].map((plan) => (
           <label
             key={plan.id}
             htmlFor={plan.id}
             style={styles.pricing}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
+            onMouseEnter={(e) => (e.currentTarget.style.boxShadow = styles.pricingHover.boxShadow)}
+            onMouseLeave={(e) => (e.currentTarget.style.boxShadow = "none")}
           >
             <div style={styles.name}>
               {plan.name} <plan.Icon style={styles.nameIcon} />
             </div>
             <div style={styles.price}>
-              {plan.price}
+              {plan.strikethrough ? (
+                <span style={{ textDecoration: "line-through" }}>{plan.price}</span>
+              ) : (
+                plan.price
+              )}
               <span style={styles.priceSmallText}>Per month</span>
             </div>
             <div style={styles.features}>
@@ -226,14 +203,21 @@ function PricingPlans() {
               ))}
             </div>
             <div style={styles.btns}>
-              <button
-                type="button"
+              <a
+                href={plan.link}
+                target="_blank"  // Open in a new tab
                 style={styles.button}
-                onMouseEnter={handleButtonHover}
-                onMouseLeave={handleButtonLeave}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = styles.buttonHover.background;
+                  e.currentTarget.style.color = styles.buttonHover.color;
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = styles.button.background;
+                  e.currentTarget.style.color = styles.button.color;
+                }}
               >
                 Get Started
-              </button>
+              </a>
               <a href="#" style={styles.link}>
                 Know More
               </a>

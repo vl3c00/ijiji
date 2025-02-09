@@ -63,7 +63,7 @@ export default function ServicesPage() {
       <form onSubmit={handleLogin} className="flex flex-col items-center w-full max-w-md">
         <input
           type="text"
-          placeholder="Token ID"
+          placeholder="Token ID User001"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
@@ -71,7 +71,7 @@ export default function ServicesPage() {
         />
         <input
           type="password"
-          placeholder="Access Token"
+          placeholder="Access Token 00001111"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
